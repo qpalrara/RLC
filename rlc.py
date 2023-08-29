@@ -49,7 +49,9 @@ class RLC:
         '''
         모든 데이터를 그리고 극댓값을 표시함
         '''
-        self.update()
+        if len(self.q) <= self.graph_len * 100 / self.graph_width:
+            for i in range(1000):
+                self.update()
         for key, data in zip(self.colors.keys(), [self.q, self.q_, self.q__]):
 
             max_val = max([abs(value) for value in data]+[0.0001])
