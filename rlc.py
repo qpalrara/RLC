@@ -45,13 +45,14 @@ class RLC:
         # n 주기까지 그림
         self.graph_len = 8
 
+        
+        for i in range(8000):
+            self.update()
+
     def draw(self):
         '''
         모든 데이터를 그리고 극댓값을 표시함
         '''
-        if len(self.q) <= self.graph_len * 100 / self.graph_width:
-            for i in range(1000):
-                self.update()
         for key, data in zip(self.colors.keys(), [self.q, self.q_, self.q__]):
 
             max_val = max([abs(value) for value in data]+[0.0001])
