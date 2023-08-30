@@ -2,27 +2,12 @@ import math
 import pygame
 # Vcos(wt) = Q/C + (dQ/dt)R + L(d^2Q/dt^2)
 class RLC:
-    def __init__(self, render):
+    def __init__(self, render, q, q_, q__):
         self.render = render
-
-        # 초기 값
-
-        # self.q = [0]
-        # self.q_ = [0]
-        # self.q__ = [0]
-
-        # self.q = [7E-4]
-        # self.q_ = [0]
-        # self.q__ = [0]
-
-        # self.q = [3E-3]
-        # self.q_ = [0]
-        # self.q__ = [0]
-
         
-        self.q = [9E-3]
-        self.q_ = [0]
-        self.q__ = [0]
+        self.q = q
+        self.q_ = q_
+        self.q__ = q__
 
         # 전압, 전기용량, 인덕턴스, 저항, 각진동수, 시간, 시간 변화(600000프레임 -> 1초)
         self.V = 150

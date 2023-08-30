@@ -1,5 +1,6 @@
 import pygame
 from rlc import *
+from scroll import *
 
 class SoftwareRender:
     def __init__(self):
@@ -8,17 +9,23 @@ class SoftwareRender:
         self.FPS = 60
         self.screen = pygame.display.set_mode(self.RES)
         self.clock = pygame.time.Clock()
-        self.rlc = RLC(self)
+        self.scroll = Scroll(1000, 700, 300, pygame.Color("black"), 0)
+        self.rlc = RLC(self, [10^(3*self.scroll.gauge-5)], [0], [0])
+        self.font = pygame.font.SysFont("consolas", 30)
 
-    def draw(self):
+    def update(self, events):
         self.screen.fill(pygame.Color('white'))
+        self.screen.blit(self.font.render("Q0 = "+"%.2e"%(10**(3*self.scroll.gauge-5)), True, pygame.Color('black')), (1050, 600))
+        self.rlc = RLC(self, [10**(3*self.scroll.gauge-5)], [0], [0])
         self.rlc.draw()
+        self.scroll.update(events, self.screen)
 
 
     def run(self):
         while True:
-            self.draw()
-            for event in pygame.event.get():
+            events = pygame.event.get()
+            self.update(events)
+            for event in events:
                 if event.type == pygame.QUIT:
                     exit()
             pygame.display.set_caption(str(self.clock.get_fps()))
