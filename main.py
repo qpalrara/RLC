@@ -12,12 +12,17 @@ class SoftwareRender:
         self.scroll = Scroll(1000, 700, 300, pygame.Color("black"), 0)
         self.rlc = RLC(self, [10^(3*self.scroll.gauge-5)], [0], [0])
         self.font = pygame.font.SysFont("consolas", 30)
+        self.e = False
 
     def update(self, events):
         self.screen.fill(pygame.Color('white'))
         self.screen.blit(self.font.render("Q0 = "+"%.2e"%(10**(3*self.scroll.gauge-5)), True, pygame.Color('black')), (1050, 600))
         self.rlc = RLC(self, [10**(3*self.scroll.gauge-5)], [0], [0])
-        self.rlc.draw()
+        self.energy = Energy(self, self.rlc)
+        if self.e:
+            self.energy.draw()
+        else:
+            self.rlc.draw()
         self.scroll.update(events, self.screen)
 
 
@@ -28,6 +33,9 @@ class SoftwareRender:
             for event in events:
                 if event.type == pygame.QUIT:
                     exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.e = not self.e
             pygame.display.set_caption(str(self.clock.get_fps()))
             pygame.display.flip()
             self.clock.tick(self.FPS)
